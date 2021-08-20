@@ -1,0 +1,35 @@
+{
+	"name": "pikacord",
+	"version": "1.0.0",
+	"description": "A Pokémon Discord bot",
+	"main": "dist/index.js",
+	"scripts": {
+		"watch": "tsc -w",
+		"dev": "nodemon dist/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mathletedev/pikacord.git"
+	},
+	"author": {
+		"name": "mathletedev",
+		"email": "mathletedev@gmail.com"
+	},
+	"license": "MIT",
+	"private": true,
+	"bugs": {
+		"url": "https://github.com/mathletedev/pikacord/issues"
+	},
+	"homepage": "https://github.com/mathletedev/pikacord#readme",
+	"dependencies": {
+		"@discordjs/rest": "^0.1.0-canary.0",
+		"discord-api-types": "^0.22.0",
+		"discord.js": "^13.1.0",
+		"dotenv-safe": "^8.2.0"
+	},
+	"devDependencies": {
+		"@types/node": "^16.6.2",
+		"nodemon": "^2.0.12",
+		"typescript": "^4.3.5"
+	}
+}

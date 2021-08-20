@@ -1,2 +1,3 @@
 # pikacord
-A Pokémon Discord bot
+
+> A Pokémon Discord bot
