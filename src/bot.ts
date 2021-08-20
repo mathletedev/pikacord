@@ -1,5 +1,8 @@
 import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
+import {
+	RESTGetAPIApplicationCommandsResult,
+	Routes
+} from "discord-api-types/v9";
 import { BitFieldResolvable, Client, Intents, IntentsString } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
@@ -55,6 +58,31 @@ export default class Bot {
 			this.logger.info(
 				`Successfully registered ${this.commands.length} commands!`
 			);
+		} catch (error) {
+			this.logger.error((error as Error).message);
+		}
+	}
+
+	public async unregisterCommands(clientId: string, guildId?: string) {
+		try {
+			const commands = (await this.rest.get(
+				guildId
+					? Routes.applicationGuildCommands(clientId, guildId)
+					: Routes.applicationCommands(clientId)
+			)) as RESTGetAPIApplicationCommandsResult;
+
+			for (const command of commands) {
+				if (guildId) {
+					this.rest.delete(
+						Routes.applicationGuildCommand(clientId, guildId, command.id)
+					);
+					continue;
+				}
+
+				this.rest.delete(Routes.applicationCommand(clientId, command.id));
+			}
+
+			this.logger.info(`Successfully unregistered all commands!`);
 		} catch (error) {
 			this.logger.error((error as Error).message);
 		}

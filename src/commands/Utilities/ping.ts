@@ -15,9 +15,9 @@ export default new Command(
 				bot.util.formatEmbed(
 					{
 						title: "🏓 Pong!",
-						description: `❯ ⌛ ${
+						description: `⌛ ${
 							sent.createdTimestamp - interaction.createdTimestamp
-						} ms\n\n❯ 💓 ${Math.round(bot.client.ws.ping)} ms`
+						} ms\n\n💓 ${Math.round(bot.client.ws.ping)} ms`
 					},
 					interaction
 				)
