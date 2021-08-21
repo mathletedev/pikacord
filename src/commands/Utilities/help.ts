@@ -30,9 +30,8 @@ export default new Command({
 				embeds: [
 					bot.util.formatEmbed(
 						{
-							title: "📓 Help",
+							title: `📓 Help | /${command.options.name}`,
 							description: stripIndents`
-						❯ **Command:** \`${command.options.name}\`
 						❯ **Description:** ${command.options.description}
 						❯ **Category:** ${__categories__[command.props.category]} ${
 								command.props.category

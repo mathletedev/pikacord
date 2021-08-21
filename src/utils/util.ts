@@ -32,4 +32,11 @@ export class Util {
 	public formatError(message: string): InteractionReplyOptions {
 		return { content: `❌ ${message}`, ephemeral: true };
 	}
+
+	public capitalize(text: string, split: string = " ") {
+		return text
+			.split(split)
+			.map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
+			.join(" ");
+	}
 }

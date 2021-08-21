@@ -26,7 +26,9 @@ export default new Command({
 			const deleted = await (channel as TextChannel).bulkDelete(amount);
 
 			return {
-				content: `🗑️ Deleted ${deleted.size} messages`,
+				content: `🗑️ Deleted ${deleted.size} message${
+					deleted.size === 1 ? "" : "s"
+				}`,
 				ephemeral: true
 			};
 		} catch (_) {
