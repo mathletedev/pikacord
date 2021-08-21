@@ -41,7 +41,7 @@ export default new Command({
 								command.options.options
 									? command.options.options.map(
 											(option) =>
-												` ${option.required ? "<" : "["} ${option.name} ${
+												` ${option.required ? "<" : "["}${option.name}${
 													option.required ? ">" : "]"
 												}`
 									  )

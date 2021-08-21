@@ -89,9 +89,11 @@ export default class Bot {
 	}
 
 	public listen() {
-		this.client.on("ready", () =>
-			this.logger.info(`${this.client.user?.tag} is online!`)
-		);
+		this.client.on("ready", () => {
+			this.client.user?.setActivity({ name: "Pokémon" });
+
+			this.logger.info(`${this.client.user?.tag} is online!`);
+		});
 
 		this.client.on("interactionCreate", async (interaction) => {
 			if (!interaction.isCommand() || !interaction.guild) return;
@@ -107,7 +109,5 @@ export default class Bot {
 
 	public start() {
 		this.client.login(this.token);
-
-		this.client.user?.setActivity({ name: "Pokémon" });
 	}
 }
