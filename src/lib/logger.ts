@@ -1,4 +1,4 @@
-export class Logger {
+export default class Logger {
 	private log(type: string, message: string) {
 		const now = new Date();
 

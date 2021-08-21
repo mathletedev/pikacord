@@ -8,26 +8,30 @@ import { readdirSync } from "fs";
 import { join } from "path";
 import Pokedex from "pokedex-promise-v2";
 import Command from "./commands/command";
-import { Logger } from "./utils/logger";
-import { Util } from "./utils/util";
+import DB from "./lib/db";
+import Logger from "./lib/logger";
+import Util from "./lib/util";
 
 export default class Bot {
 	public client: Client;
 	private rest = new REST({ version: "9" });
 	public commands: Command[] = [];
 	public logger = new Logger();
-	public util = new Util(this);
+	public util = new Util();
+	public db: DB;
 	public dex = new Pokedex();
 	private token: string;
 
 	public constructor(
 		token: string,
+		mongoUri: string,
 		intents: BitFieldResolvable<IntentsString, number> = [Intents.FLAGS.GUILDS]
 	) {
 		this.token = token;
 
 		this.client = new Client({ intents });
 		this.rest.setToken(token);
+		this.db = new DB(mongoUri);
 	}
 
 	public async loadCommands(commandsDir: string) {

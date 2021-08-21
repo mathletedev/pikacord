@@ -1,8 +1,11 @@
+import { InteractionReplyOptions } from "discord.js";
+
 export const __emotes__: Record<string, string> = {
 	pokemon: "<:pokemon:878467638802673664>"
 };
 
 export const __categories__: Record<string, string> = {
+	Currency: "💰",
 	Pokémon: __emotes__.pokemon,
 	Utilities: "🛠️"
 };
@@ -27,4 +30,9 @@ export const __pokemonColors__: Record<string, number> = {
 	red: 0xff0000,
 	white: 0xffffff,
 	yellow: 0xffff00
+};
+
+export const __defaultError__: InteractionReplyOptions = {
+	content: "❌ Something went wrong... Try again later",
+	ephemeral: true
 };

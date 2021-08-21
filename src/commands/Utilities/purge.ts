@@ -28,7 +28,7 @@ export default new Command({
 			return {
 				content: `🗑️ Deleted ${deleted.size} message${
 					deleted.size === 1 ? "" : "s"
-				}`,
+				}!`,
 				ephemeral: true
 			};
 		} catch (_) {
@@ -36,6 +36,7 @@ export default new Command({
 		}
 	},
 	props: {
-		category: "Utilities"
+		category: "Utilities",
+		cooldown: 1e4
 	}
 });

@@ -6,6 +6,9 @@
 		"strict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"strictPropertyInitialization": false,
 		"removeComments": true
 	},
 	"include": ["src/**/*.ts"],

@@ -2,7 +2,7 @@ import "dotenv-safe/config";
 import Bot from "./bot";
 
 (async () => {
-	const bot = new Bot(process.env.BOT_TOKEN!);
+	const bot = new Bot(process.env.BOT_TOKEN!, process.env.MONGO_URI!);
 	await bot.loadCommands("commands");
 
 	const args = process.argv.slice(2);

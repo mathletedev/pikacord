@@ -8,6 +8,7 @@ export default new Command({
 		description: "Check the latency of the server"
 	},
 	exec: async ({ bot, interaction }) => {
+		await interaction.reply("Ping?");
 		const sent = (await interaction.fetchReply()) as Message;
 
 		interaction.editReply({

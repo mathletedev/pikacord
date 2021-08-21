@@ -23,10 +23,12 @@
 	"homepage": "https://github.com/mathletedev/pikacord#readme",
 	"dependencies": {
 		"@discordjs/rest": "^0.1.0-canary.0",
+		"@typegoose/typegoose": "^8.1.1",
 		"common-tags": "^1.8.0",
 		"discord-api-types": "^0.22.0",
 		"discord.js": "^13.1.0",
 		"dotenv-safe": "^8.2.0",
+		"mongoose": "^5.13.7",
 		"pokedex-promise-v2": "^3.3.2"
 	},
 	"devDependencies": {

@@ -1,5 +1,5 @@
 import { stripIndents } from "common-tags";
-import { __pokemonColors__, __stats__ } from "../../utils/constants";
+import { __pokemonColors__, __stats__ } from "../../lib/constants";
 import Command from "../command";
 
 export default new Command({
@@ -16,6 +16,8 @@ export default new Command({
 		]
 	},
 	exec: async ({ bot, interaction }) => {
+		await interaction.deferReply();
+
 		const name = interaction.options.getString("pokémon", true);
 
 		const pokemon = await bot.dex.getPokemonByName(name).catch(() => {});
@@ -60,7 +62,7 @@ export default new Command({
 			evolution = evolution.evolves_to[0];
 		}
 
-		return {
+		interaction.editReply({
 			embeds: [
 				bot.util.formatEmbed(
 					{
@@ -154,7 +156,7 @@ export default new Command({
 					interaction
 				)
 			]
-		};
+		});
 	},
 	props: {
 		category: "Pokémon"

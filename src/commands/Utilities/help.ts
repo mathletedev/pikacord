@@ -1,5 +1,5 @@
 import { stripIndents } from "common-tags";
-import { __categories__ } from "../../utils/constants";
+import { __categories__ } from "../../lib/constants";
 import Command from "../command";
 
 export default new Command({
@@ -45,7 +45,13 @@ export default new Command({
 												}`
 									  )
 									: ""
-							}\`
+							}\`${
+								command.props.cooldown
+									? `\n❯ **Cooldown:** ${bot.util.parseTime(
+											command.props.cooldown
+									  )}`
+									: ""
+							}
 						`
 						},
 						interaction

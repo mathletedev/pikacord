@@ -4,15 +4,8 @@ import {
 	InteractionReplyOptions,
 	MessageEmbedOptions
 } from "discord.js";
-import Bot from "../bot";
 
-export class Util {
-	private bot: Bot;
-
-	public constructor(bot: Bot) {
-		this.bot = bot;
-	}
-
+export default class Util {
 	public formatEmbed(
 		embed: MessageEmbedOptions,
 		interaction: CommandInteraction
@@ -38,5 +31,32 @@ export class Util {
 			.split(split)
 			.map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
 			.join(" ");
+	}
+
+	public joinParts(parts: string[]) {
+		const last = parts.pop();
+		if (!parts.length) return last;
+		if (parts.length === 1) return `${parts[0]} and ${last}`;
+
+		return `${parts.join(", ")}, and ${last}`;
+	}
+
+	public parseTime(ms: number) {
+		let time: Record<string, number> = {};
+		let s = ms / 1000;
+
+		time.h = Math.floor(s / 3600);
+		s %= 3600;
+
+		time.m = Math.floor(s / 60);
+		s %= 60;
+
+		time.s = time.h && time.m ? Math.round(s) : Math.round(s * 10) / 10;
+
+		return `\`${this.joinParts(
+			Object.keys(time)
+				.filter((key) => time[key] !== 0)
+				.map((key) => `${time[key]}${key}`)
+		)}\``;
 	}
 }
