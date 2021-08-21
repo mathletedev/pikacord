@@ -7,7 +7,8 @@ import {
 import Bot from "../bot";
 
 export interface CommandProps {
-	cooldown: number;
+	category: string;
+	cooldown?: number;
 }
 
 export interface CommandArgs {
@@ -24,11 +25,15 @@ export default class Command {
 	public props: CommandProps;
 	private _exec: CommandExecute;
 
-	public constructor(
-		options: RESTPostAPIApplicationCommandsJSONBody,
-		exec: CommandExecute,
-		props: CommandProps = { cooldown: 0 }
-	) {
+	public constructor({
+		options,
+		exec,
+		props
+	}: {
+		options: RESTPostAPIApplicationCommandsJSONBody;
+		exec: CommandExecute;
+		props: CommandProps;
+	}) {
 		this.options = options;
 		this.props = props;
 		this._exec = exec;

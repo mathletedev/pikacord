@@ -1,6 +1,7 @@
 import {
 	CommandInteraction,
 	GuildMember,
+	InteractionReplyOptions,
 	MessageEmbedOptions
 } from "discord.js";
 import Bot from "../bot";
@@ -26,5 +27,9 @@ export class Util {
 		};
 
 		return embed;
+	}
+
+	public formatError(message: string): InteractionReplyOptions {
+		return { content: `❌ ${message}`, ephemeral: true };
 	}
 }

@@ -1,12 +1,13 @@
+import { stripIndents } from "common-tags";
 import { Message } from "discord.js";
 import Command from "../command";
 
-export default new Command(
-	{
+export default new Command({
+	options: {
 		name: "ping",
 		description: "Check the latency of the server"
 	},
-	async ({ bot, interaction }) => {
+	exec: async ({ bot, interaction }) => {
 		await interaction.reply("Ping?");
 		const sent = (await interaction.fetchReply()) as Message;
 
@@ -15,13 +16,15 @@ export default new Command(
 				bot.util.formatEmbed(
 					{
 						title: "🏓 Pong!",
-						description: `⌛ ${
-							sent.createdTimestamp - interaction.createdTimestamp
-						} ms\n\n💓 ${Math.round(bot.client.ws.ping)} ms`
+						description: stripIndents`
+						⌛ ${sent.createdTimestamp - interaction.createdTimestamp} ms
+						
+						💓 ${Math.round(bot.client.ws.ping)} ms`
 					},
 					interaction
 				)
 			]
 		});
-	}
-);
+	},
+	props: { category: "Utilities" }
+});

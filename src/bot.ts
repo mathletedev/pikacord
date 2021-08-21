@@ -13,10 +13,10 @@ import { Util } from "./utils/util";
 export default class Bot {
 	public client: Client;
 	private rest = new REST({ version: "9" });
-	private commands: Command[] = [];
-	private token: string;
+	public commands: Command[] = [];
 	public logger = new Logger();
 	public util = new Util(this);
+	private token: string;
 
 	public constructor(
 		token: string,
