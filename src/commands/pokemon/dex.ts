@@ -1,6 +1,6 @@
 import { stripIndents } from "common-tags";
 import Pokedex from "pokedex-promise-v2";
-import { __stats__ } from "../../utils/constants";
+import { __pokemonColors__, __stats__ } from "../../utils/constants";
 import Command from "../command";
 
 export default new Command({
@@ -115,7 +115,7 @@ export default new Command({
 												.map((name) => `❯ ${bot.util.capitalize(name, "-")}`)
 												.join("\n")}`
 										: ""
-								}`,
+								}${prev.length || next.length ? "" : "None"}`,
 								inline: true
 							},
 							{
@@ -149,7 +149,8 @@ export default new Command({
 						],
 						image: {
 							url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
-						}
+						},
+						color: __pokemonColors__[species.color.name]
 					},
 					interaction
 				)
