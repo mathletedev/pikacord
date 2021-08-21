@@ -41,10 +41,12 @@ export default class Command {
 
 	public async exec({ bot, interaction }: CommandArgs) {
 		try {
+			await interaction.deferReply();
+
 			const res = await this._exec({ bot, interaction });
 			if (!res) return;
 
-			interaction.reply(res);
+			interaction.editReply(res);
 		} catch (error) {
 			bot.logger.error((error as Error).message);
 		}

@@ -18,13 +18,13 @@ export const __stats__: Record<string, string> = {
 
 export const __pokemonColors__: Record<string, number> = {
 	black: 0x000000,
-	blue: 0x5eb1ff,
-	brown: 0x4a2e20,
+	blue: 0x0000ff,
+	brown: 0x231709,
 	gray: 0xa0a0a0,
-	green: 0x2ded43,
-	pink: 0xffd2c9,
-	purple: 0x6024d6,
-	red: 0xe80000,
+	green: 0x00ff00,
+	pink: 0xffc0cb,
+	purple: 0x6603fc,
+	red: 0xff0000,
 	white: 0xffffff,
-	yellow: 0xfff700
+	yellow: 0xffff00
 };

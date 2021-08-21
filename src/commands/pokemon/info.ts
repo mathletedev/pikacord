@@ -1,5 +1,4 @@
 import { stripIndents } from "common-tags";
-import Pokedex from "pokedex-promise-v2";
 import { __pokemonColors__, __stats__ } from "../../utils/constants";
 import Command from "../command";
 
@@ -18,20 +17,19 @@ export default new Command({
 	},
 	exec: async ({ bot, interaction }) => {
 		const name = interaction.options.getString("pokémon", true);
-		const dex = new Pokedex();
 
-		const pokemon = await dex.getPokemonByName(name).catch(() => {});
+		const pokemon = await bot.dex.getPokemonByName(name).catch(() => {});
 		if (!pokemon)
 			return bot.util.formatError(`Unable to find pokémon \`${name}\``);
 
-		const species = await dex.getPokemonSpeciesByName(name).catch(() => {});
+		const species = await bot.dex.getPokemonSpeciesByName(name).catch(() => {});
 		if (!species)
 			return bot.util.formatError(`Unable to find pokémon species \`${name}\``);
 
 		const femaleRate = (species.gender_rate / 8) * 100;
 
 		const url = species.evolution_chain.url.split("/");
-		const chain = await dex
+		const chain = await bot.dex
 			.getEvolutionChainById(parseInt(url[url.length - 2]))
 			.catch(() => {});
 		if (!chain)
@@ -66,7 +64,7 @@ export default new Command({
 			embeds: [
 				bot.util.formatEmbed(
 					{
-						title: `🔎 Info | #${pokemon.id} | ${bot.util.capitalize(
+						title: `🔎 Info | #${pokemon.id} - ${bot.util.capitalize(
 							pokemon.name,
 							"-"
 						)}`,
@@ -82,23 +80,12 @@ export default new Command({
 								inline: true
 							},
 							{
-								name: `Abilitie${pokemon.abilities.length === 1 ? "" : "s"}`,
-								value: `${pokemon.abilities
-									.filter((ability) => !ability.is_hidden)
-									.map(
-										(ability) =>
-											`❯ ${bot.util.capitalize(ability.ability.name, "-")}`
-									)
-									.join("\n")}${
-									pokemon.abilities.some((ability) => ability.is_hidden)
-										? `\n❯ (${bot.util.capitalize(
-												pokemon.abilities.filter(
-													(ability) => ability.is_hidden
-												)[0].ability.name,
-												"-"
-										  )})`
-										: ""
-								}`,
+								name: "Description",
+								value: stripIndents`
+								**Height:** ${pokemon.height / 10} m
+								**Weight:** ${pokemon.weight / 10} kg
+								**Color:** ${bot.util.capitalize(species.color.name, "-")}
+								`,
 								inline: true
 							},
 							{
@@ -128,11 +115,23 @@ export default new Command({
 								inline: true
 							},
 							{
-								name: "Size",
-								value: stripIndents`
-								**Height:** ${pokemon.height / 10} m
-								**Weight:** ${pokemon.weight / 10} kg
-								`,
+								name: `Abilitie${pokemon.abilities.length === 1 ? "" : "s"}`,
+								value: `${pokemon.abilities
+									.filter((ability) => !ability.is_hidden)
+									.map(
+										(ability) =>
+											`❯ ${bot.util.capitalize(ability.ability.name, "-")}`
+									)
+									.join("\n")}${
+									pokemon.abilities.some((ability) => ability.is_hidden)
+										? `\n❯ (${bot.util.capitalize(
+												pokemon.abilities.filter(
+													(ability) => ability.is_hidden
+												)[0].ability.name,
+												"-"
+										  )})`
+										: ""
+								}`,
 								inline: true
 							},
 							{

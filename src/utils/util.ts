@@ -17,7 +17,7 @@ export class Util {
 		embed: MessageEmbedOptions,
 		interaction: CommandInteraction
 	) {
-		if (!embed.color) embed.color = 0x7289da;
+		if (embed.color === undefined) embed.color = 0x7289da;
 		embed.footer = {
 			iconURL: interaction.user.avatarURL() as string | undefined,
 			text: `${

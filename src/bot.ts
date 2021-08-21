@@ -6,6 +6,7 @@ import {
 import { BitFieldResolvable, Client, Intents, IntentsString } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
+import Pokedex from "pokedex-promise-v2";
 import Command from "./commands/command";
 import { Logger } from "./utils/logger";
 import { Util } from "./utils/util";
@@ -16,6 +17,7 @@ export default class Bot {
 	public commands: Command[] = [];
 	public logger = new Logger();
 	public util = new Util(this);
+	public dex = new Pokedex();
 	private token: string;
 
 	public constructor(
