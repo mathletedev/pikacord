@@ -1,5 +1,14 @@
 import { InteractionReplyOptions } from "discord.js";
 
+export const __defaultError__: InteractionReplyOptions = {
+	content: "❌ Something went wrong... Try again later",
+	ephemeral: true
+};
+
+export const __colors__: Record<string, number> = {
+	blue: 0x7289da
+};
+
 export const __emotes__: Record<string, string> = {
 	pokemon: "<:pokemon:878467638802673664>"
 };
@@ -10,7 +19,7 @@ export const __categories__: Record<string, string> = {
 	Utilities: "🛠️"
 };
 
-export const __stats__: Record<string, string> = {
+export const __pokemonStats__: Record<string, string> = {
 	hp: "HP",
 	attack: "Attack",
 	defense: "Defense",
@@ -32,7 +41,25 @@ export const __pokemonColors__: Record<string, number> = {
 	yellow: 0xffff00
 };
 
-export const __defaultError__: InteractionReplyOptions = {
-	content: "❌ Something went wrong... Try again later",
-	ephemeral: true
+export const __pokemonTypes__: Record<string, string> = {
+	normal: "☀️",
+	fighting: "👊",
+	flying: "🦋",
+	poison: "☠️",
+	ground: "⛰️",
+	rock: "💎",
+	bug: "🐛",
+	ghost: "👻",
+	steel: "⚙️",
+	fire: "🔥",
+	water: "💧",
+	grass: "☘️",
+	electric: "⚡",
+	psychic: "👁️",
+	ice: "🧊",
+	dragon: "⛩️",
+	dark: "🌑",
+	fairy: "❤️",
+	unknown: "❓",
+	shadow: "👤"
 };

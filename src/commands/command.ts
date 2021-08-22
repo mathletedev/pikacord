@@ -72,8 +72,10 @@ export default class Command {
 			const res = await this._exec({ bot, interaction });
 			if (!res) return;
 
+			if (interaction.deferred) return interaction.editReply(res);
 			interaction.reply(res);
 		} catch (error) {
+			if (interaction.deferred) return interaction.editReply(__defaultError__);
 			interaction.reply(__defaultError__);
 
 			bot.logger.error((error as Error).message);

@@ -8,6 +8,7 @@ import { readdirSync } from "fs";
 import { join } from "path";
 import Pokedex from "pokedex-promise-v2";
 import Command from "./commands/command";
+import { __colors__ } from "./lib/constants";
 import DB from "./lib/db";
 import Logger from "./lib/logger";
 import Util from "./lib/util";
@@ -25,7 +26,10 @@ export default class Bot {
 	public constructor(
 		token: string,
 		mongoUri: string,
-		intents: BitFieldResolvable<IntentsString, number> = [Intents.FLAGS.GUILDS]
+		intents: BitFieldResolvable<IntentsString, number> = [
+			Intents.FLAGS.GUILDS,
+			Intents.FLAGS.GUILD_MESSAGES
+		]
 	) {
 		this.token = token;
 
@@ -102,7 +106,12 @@ export default class Bot {
 		});
 
 		this.client.on("interactionCreate", async (interaction) => {
-			if (!interaction.isCommand() || !interaction.guild) return;
+			if (
+				!interaction.isCommand() ||
+				!interaction.guild ||
+				interaction.user.bot
+			)
+				return;
 
 			const command = this.commands.find(
 				(command) => command.options.name === interaction.commandName
@@ -110,6 +119,37 @@ export default class Bot {
 			if (!command) return;
 
 			command.exec({ bot: this, interaction });
+		});
+
+		this.client.on("messageCreate", async (message) => {
+			if (!message.guildId || message.author.bot) return;
+
+			const channel = await this.db.getChannel(message.channelId);
+
+			if (channel.nextSpawn === 0) {
+				channel.nextSpawn = Math.floor(Math.random() * 40) + 10;
+
+				const pokemon = await this.dex.getPokemonByName(
+					Math.floor(Math.random() * 897) + 1
+				);
+				message.channel.send({
+					embeds: [
+						{
+							title: "A wild pokémon has appeared!",
+							description:
+								"Guess the pokémon and type `/catch <pokémon>` to catch it!",
+							image: { url: this.util.getPokemonImage(pokemon.id) },
+							color: __colors__.blue
+						}
+					]
+				});
+
+				channel.pokemon = pokemon.name;
+				await channel.save();
+			}
+
+			channel.nextSpawn -= 1;
+			await channel.save();
 		});
 	}
 

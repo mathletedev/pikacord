@@ -1,4 +1,5 @@
 import { connect } from "mongoose";
+import { ChannelModel } from "./models/channel";
 import { CooldownModel } from "./models/cooldown";
 import { UserModel } from "./models/user";
 
@@ -19,8 +20,7 @@ export default class DB {
 	public async createUser(userId: string) {
 		if (await this.getUser(userId)) return;
 
-		const user = new UserModel({ userId });
-		return await user.save();
+		return new UserModel({ userId }).save();
 	}
 
 	public async getCooldown(command: string, userId: string) {
@@ -29,14 +29,17 @@ export default class DB {
 
 	public async resetCooldown(command: string, userId: string) {
 		const cooldown = await CooldownModel.findOne({ command, userId });
-
-		if (!cooldown) {
-			const newCooldown = new CooldownModel({ command, userId });
-			return await newCooldown.save();
-		}
+		if (!cooldown) return new CooldownModel({ command, userId }).save();
 
 		cooldown.createdAt = Date.now();
 		return await cooldown.save();
+	}
+
+	public async getChannel(channelId: string) {
+		const channel = await ChannelModel.findOne({ channelId });
+		if (!channel) return new ChannelModel({ channelId }).save();
+
+		return channel;
 	}
 
 	public async addBalance(userId: string, amount: number) {
@@ -44,6 +47,6 @@ export default class DB {
 		if (!user) return;
 
 		user.balance += amount;
-		return await user.save();
+		return user.save();
 	}
 }

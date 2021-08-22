@@ -1,5 +1,9 @@
 import { stripIndents } from "common-tags";
-import { __pokemonColors__, __stats__ } from "../../lib/constants";
+import {
+	__pokemonColors__,
+	__pokemonStats__,
+	__pokemonTypes__
+} from "../../lib/constants";
 import Command from "../command";
 
 export default new Command({
@@ -16,8 +20,6 @@ export default new Command({
 		]
 	},
 	exec: async ({ bot, interaction }) => {
-		await interaction.deferReply();
-
 		const name = interaction.options.getString("pokémon", true);
 
 		const pokemon = await bot.dex.getPokemonByName(name).catch(() => {});
@@ -38,6 +40,8 @@ export default new Command({
 			return bot.util.formatError(
 				`Unable to find evolution chain of \`${name}\``
 			);
+
+		await interaction.deferReply();
 
 		let prev: string[] = [];
 		let next: string[] = [];
@@ -62,7 +66,7 @@ export default new Command({
 			evolution = evolution.evolves_to[0];
 		}
 
-		interaction.editReply({
+		return {
 			embeds: [
 				bot.util.formatEmbed(
 					{
@@ -76,7 +80,9 @@ export default new Command({
 								value: pokemon.stats
 									.map(
 										(stat) =>
-											`**${__stats__[stat.stat.name]}:** ${stat.base_stat}`
+											`**${__pokemonStats__[stat.stat.name]}:** ${
+												stat.base_stat
+											}`
 									)
 									.join("\n"),
 								inline: true
@@ -111,13 +117,16 @@ export default new Command({
 								name: `Type${pokemon.types.length === 1 ? "" : "s"}`,
 								value: pokemon.types
 									.map(
-										(type) => `❯ ${bot.util.capitalize(type.type.name, "-")}`
+										(type) =>
+											`❯ ${bot.util.capitalize(type.type.name, "-")} ${
+												__pokemonTypes__[type.type.name]
+											}`
 									)
 									.join("\n"),
 								inline: true
 							},
 							{
-								name: `Abilitie${pokemon.abilities.length === 1 ? "" : "s"}`,
+								name: `Abilit${pokemon.abilities.length === 1 ? "y" : "ies"}`,
 								value: `${pokemon.abilities
 									.filter((ability) => !ability.is_hidden)
 									.map(
@@ -148,15 +157,13 @@ export default new Command({
 								inline: true
 							}
 						],
-						image: {
-							url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
-						},
+						image: { url: bot.util.getPokemonImage(pokemon.id) },
 						color: __pokemonColors__[species.color.name]
 					},
 					interaction
 				)
 			]
-		});
+		};
 	},
 	props: {
 		category: "Pokémon"

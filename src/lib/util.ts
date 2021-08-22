@@ -59,4 +59,8 @@ export default class Util {
 				.map((key) => `${time[key]}${key}`)
 		)}\``;
 	}
+
+	public getPokemonImage(id: any) {
+		return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+	}
 }
