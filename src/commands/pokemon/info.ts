@@ -41,8 +41,6 @@ export default new Command({
 				`Unable to find evolution chain of \`${name}\``
 			);
 
-		await interaction.deferReply();
-
 		let prev: string[] = [];
 		let next: string[] = [];
 		let evolution = chain.chain;
