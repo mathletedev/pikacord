@@ -25,7 +25,7 @@ export default new Command({
 		};
 	},
 	props: {
-		category: "currency",
+		category: "Currency",
 		cooldown: 8.64e7,
 		needsAccount: true
 	}
